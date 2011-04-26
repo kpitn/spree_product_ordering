@@ -1,5 +1,19 @@
+require 'active_record'
+require 'custom_fixtures'
 require 'fileutils'
 include FileUtils::Verbose
+
+namespace :db do
+  desc "Standart migrations"
+  task :migrate do
+    Rake::Task["product_ordering:db:migrate"].invoke
+  end
+
+  desc "Loads a specified fixture using rake db:load_file[filename.rb]"
+  task :seed do
+    Rake::Task["product_ordering:db:load_dir"].invoke("default")
+  end
+end
 
 namespace :product_ordering do
   namespace :db do
@@ -69,4 +83,3 @@ namespace :product_ordering do
     end
   end
 end
-
