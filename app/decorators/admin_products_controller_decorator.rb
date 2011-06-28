@@ -1,7 +1,14 @@
 Admin::ProductsController.class_eval do
 
   def reorder
-    @products = Product.active.find(:all, :order => 'position')
+
+    @taxon = Taxon.find(params[:taxon_id]) if params[:taxon_id]
+    if @taxon
+      @products = @taxon.products.order('position')
+    else
+      @products = nil
+    end
+
   end
 
   def order_products

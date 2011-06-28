@@ -1,10 +1,11 @@
 # Put your extension routes here.
 Rails.application.routes.draw do |map|
-  map.namespace :admin do |admin|
-	admin.resources :products, :collection => { :reorder => :any, :order_products => :any }, :has_many => [:product_properties, :images] do |product|
-		product.resources :variants 
-        product.resources :option_types, :member => {:select => :get, :remove => :get}, :collection => {:available => :get, :selected => :get}
-        product.resources :taxons, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected => :get}
-	end
+  namespace :admin do
+    resources :products do
+      collection do
+        get :reorder
+        post :order_products
+      end
+    end
   end
 end

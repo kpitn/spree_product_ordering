@@ -15,8 +15,15 @@ li .handle {
 
 <h1><%= t('reorder') %></h1>
 <h3><%= t('reorder_desc') %></h3><br>
-	<ul id="item_list">
 
+<h3>Choisir une catégorie :</h3>
+<% Taxon.all.each do |taxon| %>
+  <%= link_to(taxon.name,reorder_admin_products_url(:taxon_id => taxon.id)) %><br/>
+<% end %>
+
+
+	<ul id="item_list">
+  <% if @products%>
 	<% for product in @products %>
 	<% content_tag_for(:li, product, :style => "list-style: none;") do %>
       <% if product.images.any? %>
@@ -28,7 +35,8 @@ li .handle {
 			<br /><br />
 	  <% end %>
 	<% end %>
-	
+	<% end %>
+
 	</ul>
 
 <%= sortable_element("item_list", :url => { :action => :order_products, :id => product }, :handle => "handle") %>
